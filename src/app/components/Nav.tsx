@@ -2,18 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, signOut, useSession, getProviders,LiteralUnion, ClientSafeProvider } from "next-auth/react";
 
 const Nav = () => {
   const { data: session } = useSession();
 
-  const [providers, setProviders] = useState(null);
+  const [providers, setProviders] = useState<Record<LiteralUnion<any>, ClientSafeProvider> | null>(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
     (async () => {
       const res = await getProviders();
-      console.log({ res });
       if (res) {
         setProviders(res);
       }
@@ -21,8 +20,8 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
-      <Link href="/" className="flex gap-2 flex-left">
+    <nav className='flex-between w-full mb-16 pt-3'>
+    <Link href='/' className='flex gap-2 flex-center'>
         <Image
           src="/assets/images/tools.png"
           alt="Ilaro logo"
@@ -30,20 +29,20 @@ const Nav = () => {
           height={30}
           className="object-contain"
         />
-        <p className="logo_text">Ilaro</p>
+        <p className="logo_text">ilaro</p>
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="sm:flex hidden">
+      <div className='sm:flex hidden'>
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-prompt" className="black_btn">
+            <Link href="/create-post" className="black_btn">
               Create Post
             </Link>
 
             <button
               type="button"
-              onClick={() => signOut}
+              onClick={() => signOut()}
               className="outline_btn"
             >
               Sign Out
@@ -51,7 +50,7 @@ const Nav = () => {
 
             <Link href="/profile">
               <Image
-                src="assets/images/profile-default.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -79,7 +78,7 @@ const Nav = () => {
       </div>
 
       {/* Mobile Navigation */}
-      {/* <div className="sm:hidden flex relative">
+      <div className="lg:hidden flex relative">
         {session?.user ? (
           <div className="flex">
             <Image
@@ -137,7 +136,7 @@ const Nav = () => {
               ))}
           </>
         )}
-      </div> */}
+      </div> 
     </nav>
   );
 };

@@ -2,7 +2,6 @@ import User from "@models/user";
 import { connectDB } from "@utils/database";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google"
-import { Session } from "next-auth";
 
 const handler = NextAuth ({
     providers: [
@@ -11,7 +10,7 @@ const handler = NextAuth ({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!
         })
     ],
-    async session({session}): Promise<Session> {
+    async session({session}) {
         const sessionUser = await User.findOne({
             email: session.user.email
         })
