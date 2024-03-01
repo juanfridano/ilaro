@@ -1,8 +1,27 @@
-import SessionParams from "@models/authentication/session";
 import User from "@models/user";
 import { connectDB } from "@utils/database";
+import { Account, Profile, Session, User as NextUser } from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
+import { JWT} from "next-auth/jwt";
 import NextAuth from "next-auth/next";
+import { CredentialInput } from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google"
+
+interface SessionParams{
+    session: Session;
+    token: JWT;
+    user: AdapterUser;
+}
+
+interface SignInParams{
+    user: NextUser | AdapterUser
+    account: Account | null
+    profile?: Profile
+    email?: {
+      verificationRequest?: boolean
+    }
+    credentials?: Record<string, CredentialInput>
+  }
 
 const handler = NextAuth ({
     providers: [
@@ -24,9 +43,9 @@ const handler = NextAuth ({
             
             return session
         },
-        async signIn({user, account, profile, email, credentials}) {
-            // Debug: console.log({user, account, profile, email, credentials})
-            if (!profile) return false
+        async signIn(params: SignInParams) {
+            if (!params.profile) return false
+            const {profile, user} = params
             try {
                 await connectDB();
                 const email = profile.email

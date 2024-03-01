@@ -2,12 +2,22 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders,LiteralUnion, ClientSafeProvider } from "next-auth/react";
+import {
+  signIn,
+  signOut,
+  useSession,
+  getProviders,
+  LiteralUnion,
+  ClientSafeProvider,
+} from "next-auth/react";
 
 const Nav = () => {
   const { data: session } = useSession();
 
-  const [providers, setProviders] = useState<Record<LiteralUnion<any>, ClientSafeProvider> | null>(null);
+  const [providers, setProviders] = useState<Record<
+    LiteralUnion<any>,
+    ClientSafeProvider
+  > | null>(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(() => {
@@ -20,8 +30,8 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className='flex-between w-full mb-16 pt-3'>
-    <Link href='/' className='flex gap-2 flex-center'>
+    <nav className="flex-between w-full mb-16 pt-3">
+      <Link href="/" className="flex gap-2 flex-center">
         <Image
           src="/assets/images/tools.png"
           alt="Ilaro logo"
@@ -33,11 +43,11 @@ const Nav = () => {
       </Link>
 
       {/* Desktop Navigation */}
-      <div className='sm:flex hidden'>
+      <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-post" className="black_btn">
-              Create Post
+            <Link href="/articles/create" className="black_btn">
+              Create Article
             </Link>
 
             <button
@@ -50,7 +60,11 @@ const Nav = () => {
 
             <Link href="/profile">
               <Image
-                src={ session.user.image? session.user.image : "assets/images/profile-default.svg" }
+                src={
+                  session.user.image
+                    ? session.user.image
+                    : "assets/images/profile-default.svg"
+                }
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -78,7 +92,7 @@ const Nav = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="lg:hidden flex relative">
+      <div className="md:hidden flex relative">
         {session?.user ? (
           <div className="flex">
             <Image
@@ -100,11 +114,11 @@ const Nav = () => {
                   My Profile
                 </Link>
                 <Link
-                  href="/create-prompt"
+                  href="/articles/create"
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  Create Prompt
+                  Create Article
                 </Link>
                 <button
                   type="button"
@@ -136,7 +150,7 @@ const Nav = () => {
               ))}
           </>
         )}
-      </div> 
+      </div>
     </nav>
   );
 };
