@@ -28,7 +28,10 @@ const Form: FC<FormProps> = (props) => {
           <span className="font-satoshi font-semibold text-base text-gray-700">
             The article content
           </span>
-          <TextEditor/>
+          <TextEditor 
+            contentForEditor={props.article.text}
+            updateContent={(e:string) => props.setArticle({...props.article, text: e})}
+          />
         </label>
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
