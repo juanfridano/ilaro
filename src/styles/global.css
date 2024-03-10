@@ -122,9 +122,6 @@
 }
 
 /* Form Component */
-.form_textarea {
-  @apply w-full flex rounded-lg h-[200px] mt-2 p-3 text-sm text-gray-500 outline-0;
-}
 
 .form_input {
   @apply w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0;
@@ -162,4 +159,29 @@
 
 .flex-between {
   @apply flex justify-between items-center;
+}
+
+/* Editor Component */
+
+/* Menu */
+.bubble-menu {
+  @apply bg-gray-500 rounded-l space-x-1 p-2
+}
+
+.menu-button { 
+  @apply bg-white text-gray-800 w-9 h-9 shadow
+}
+
+.menu-button-active {
+  @apply bg-gray-800 text-white w-9 h-9
+}
+
+/* Editor */
+
+.text-editor {
+  @apply w-full bg-gray-50 flex p-1 min-h-64 border-black 
+}
+
+.text-editor .tiptap{
+  @apply w-full p-1 
 }

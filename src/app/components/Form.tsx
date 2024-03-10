@@ -1,13 +1,14 @@
 import Article from "@models/article";
 import Link from "next/link";
 import { Dispatch, FC, SetStateAction } from "react";
+import TextEditor from "./TextEditor/TextEditor";
 
 interface FormProps {
   type: string;
   article: Article;
   setArticle: Dispatch<SetStateAction<any>>;
   submitting: boolean;
-  handleSubmit: (e:any) => Promise<void>;
+  handleSubmit: (e: any) => Promise<void>;
 }
 
 const Form: FC<FormProps> = (props) => {
@@ -21,21 +22,13 @@ const Form: FC<FormProps> = (props) => {
       </p>
       <form
         onSubmit={props.handleSubmit}
-        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
+        className="mt-10 w-full max-w-2xl flex flex-col gap-7 bg-grey-500"
       >
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
             The article content
           </span>
-          <textarea
-            value={props.article.text}
-            onChange={(e) =>
-              props.setArticle({ ...props.article, text: e.target.value })
-            }
-            placeholder="Write the article text.."
-            required
-            className="form_textarea"
-          ></textarea>
+          <TextEditor/>
         </label>
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700">
