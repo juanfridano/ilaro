@@ -15,6 +15,7 @@ interface RootLayoutProps {
 
 const RootLayout: FC<RootLayoutProps> = (props) => {
   return (
+    
     <html lang="en">
       <body>
         <ProviderWrapper>
@@ -25,6 +26,7 @@ const RootLayout: FC<RootLayoutProps> = (props) => {
         </ProviderWrapper>
       </body>
     </html>
+    
   );
 };
 

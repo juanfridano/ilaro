@@ -2,6 +2,7 @@
 import { FC, ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import {NextUIProvider} from "@nextui-org/react";
 
 /**
  * This wrapper is needed so that it the session provider logic can be rendered in the client.
@@ -14,7 +15,7 @@ interface ProviderProps {
 }
 
 const ProviderWrapper: FC<ProviderProps> = ({ children, session }) => {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+  return <NextUIProvider><SessionProvider session={session}>{children}</SessionProvider></NextUIProvider>;
 };
 
 export default ProviderWrapper;
