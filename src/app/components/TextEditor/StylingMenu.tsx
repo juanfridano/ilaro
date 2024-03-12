@@ -1,68 +1,80 @@
 import { Editor } from "@tiptap/react";
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "@nextui-org/react";
+import { Key } from "@react-types/shared";
+import { useState } from "react";
 
 const StylingMenu = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
     return null;
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [selectedKeys, setSelectedKeys] = useState(new Set([]));
+
+  const setHeading = (key: Key): void => {
+    const heading = Number(key);
+    if (![1, 2, 3].includes(heading)) return;
+    editor.chain().focus().toggleHeading({ level: heading }).run();
+  };
 
   return (
-    <div
-      className="bubble-menu"
-    >
-      <button type="button"/>
+    <div className="bubble-menu">
+      <button type="button" />
       <Dropdown>
-      <DropdownTrigger>
-        <Button 
-          variant="bordered" 
+        <DropdownTrigger>
+          <Button variant={editor.isActive("heading") ? "solid" : "bordered"}>
+            Heading
+          </Button>
+        </DropdownTrigger>
+        <DropdownMenu
+          aria-label="Heading selection"          
+          selectionMode="single"
+          selectedKeys={selectedKeys}
+          onSelectionChange={setSelectedKeys}
+          onAction={(key) => setHeading(key)}
         >
-          Open Menu
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu 
-        aria-label="Action event example" 
-        onAction={(key) => alert(key)}
-      >
-        <DropdownItem key="new">New file</DropdownItem>
-        <DropdownItem key="copy">Copy link</DropdownItem>
-        <DropdownItem key="edit">Edit file</DropdownItem>
-        <DropdownItem key="delete" className="text-danger" color="danger">
-          Delete file
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-      <button
+          <DropdownItem key="1">Heading 1</DropdownItem>
+          <DropdownItem key="2">Heading 2</DropdownItem>
+          <DropdownItem key="3">Heading 3</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+      <Button
+        isIconOnly
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`font-bold ${
-          editor.isActive("bold") ? "menu-button-active" : "menu-button"
-        }`}
+        className="font-bold"
+        variant={editor.isActive("bold") ? "solid" : "bordered"}
       >
         B
-      </button>
-      <button
+      </Button>
+      <Button
+        isIconOnly
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`italic ${
-          editor.isActive("italic") ? "menu-button-active" : "menu-button"
-        }`}
+        className="italic"
+        variant={editor.isActive("italic") ? "solid" : "bordered"}
       >
         I
-      </button>
-      <button
+      </Button>
+      <Button
+        isIconOnly
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={`underline ${
-          editor.isActive("underline") ? "menu-button-active" : "menu-button"
-        }`}
+        className="underline"
+        variant={editor.isActive("underline") ? "solid" : "bordered"}
       >
         U
-      </button>
-      <button
+      </Button>
+      <Button
+        isIconOnly
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={`line-through ${
-          editor.isActive("strike") ? "menu-button-active" : "menu-button"
-        }`}
+        className="line-through"
+        variant={editor.isActive("strike") ? "solid" : "bordered"}
       >
         S
-      </button>
+      </Button>
     </div>
   );
 };

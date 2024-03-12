@@ -68,6 +68,7 @@
 
 /* Tailwind Styles */
 
+
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
@@ -161,19 +162,23 @@
   @apply flex justify-between items-center;
 }
 
+
+/* General Styles */
+h1 {
+  @apply text-4xl
+}
+h2 {
+  @apply text-2xl
+}
+h3 {
+  @apply text-xl
+}
+
 /* Editor Component */
 
 /* Menu */
 .bubble-menu {
-  @apply bg-gray-500 rounded-l space-x-1 p-2
-}
-
-.menu-button { 
-  @apply bg-white text-gray-800 w-9 h-9 shadow
-}
-
-.menu-button-active {
-  @apply bg-gray-800 text-white w-9 h-9
+  @apply bg-gray-50 rounded-l space-x-1 p-2
 }
 
 /* Editor */

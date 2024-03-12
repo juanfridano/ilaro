@@ -24,7 +24,7 @@ const TextEditor = (props: TextEditorProps) => {
   return (
     <div>
       <StylingMenu editor={editor} />
-      <EditorContent className="text-editor" editor={editor}/>
+      <EditorContent className="text-editor" editor={editor} onClick={(e)=> e.preventDefault()}/>
     </div>
   )
 }
