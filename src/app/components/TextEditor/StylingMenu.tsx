@@ -1,4 +1,5 @@
 import { Editor } from "@tiptap/react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 
 const StylingMenu = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
@@ -6,8 +7,30 @@ const StylingMenu = ({ editor }: { editor: Editor | null }) => {
   }
 
   return (
-    <div className="bubble-menu">
-      <button type="button" />
+    <div
+      className="bubble-menu"
+    >
+      <button type="button"/>
+      <Dropdown>
+      <DropdownTrigger>
+        <Button 
+          variant="bordered" 
+        >
+          Open Menu
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu 
+        aria-label="Action event example" 
+        onAction={(key) => alert(key)}
+      >
+        <DropdownItem key="new">New file</DropdownItem>
+        <DropdownItem key="copy">Copy link</DropdownItem>
+        <DropdownItem key="edit">Edit file</DropdownItem>
+        <DropdownItem key="delete" className="text-danger" color="danger">
+          Delete file
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={`font-bold ${
