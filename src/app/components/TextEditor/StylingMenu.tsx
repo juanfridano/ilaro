@@ -7,7 +7,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Key } from "@react-types/shared";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const StylingMenu = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
@@ -21,6 +21,14 @@ const StylingMenu = ({ editor }: { editor: Editor | null }) => {
     if (![1, 2, 3].includes(heading)) return;
     editor.chain().focus().toggleHeading({ level: heading }).run();
   };
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const addImage = useCallback(() => {
+    const url = window.prompt("URL");
+
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
+    }
+  }, [editor]);
 
   return (
     <div className="bubble-menu">
@@ -32,10 +40,10 @@ const StylingMenu = ({ editor }: { editor: Editor | null }) => {
           </Button>
         </DropdownTrigger>
         <DropdownMenu
-          aria-label="Heading selection"          
+          aria-label="Heading selection"
           selectionMode="single"
           selectedKeys={selectedKeys}
-          onSelectionChange={setSelectedKeys}
+          onSelectionChange={() => setSelectedKeys}
           onAction={(key) => setHeading(key)}
         >
           <DropdownItem key="1">Heading 1</DropdownItem>
@@ -75,6 +83,23 @@ const StylingMenu = ({ editor }: { editor: Editor | null }) => {
       >
         S
       </Button>
+      <Button
+        isIconOnly
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        variant={editor.isActive("orderedList") ? "solid" : "bordered"}
+      >
+        OL
+      </Button>
+      <Button
+        isIconOnly
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        variant={editor.isActive("bulletList") ? "solid" : "bordered"}
+      >
+        UL
+      </Button>
+      {/* <Button isIconOnly onClick={addImage} variant="bordered">
+        Im
+      </Button> */}
     </div>
   );
 };

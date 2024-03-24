@@ -188,5 +188,9 @@ h3 {
 }
 
 .text-editor .tiptap{
-  @apply w-full p-1 
+  @apply w-full p-1
 }
+
+ul li p, ol li p {
+  display: inline;
+} 
